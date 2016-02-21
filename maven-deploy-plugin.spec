@@ -4,7 +4,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        2.7
-Release:        11.12%{?dist}
+Release:        11.13%{?dist}
 Summary:        Maven Deploy Plugin
 
 License:        ASL 2.0
@@ -18,19 +18,19 @@ BuildRequires: %{?scl_prefix_java_common}javapackages-tools
 
 # Maven and its dependencies
 BuildRequires: %{?scl_prefix_java_common}maven-local
-BuildRequires: maven30-maven-plugin-plugin
-BuildRequires: maven30-maven-resources-plugin
-BuildRequires: maven30-maven-archiver
-BuildRequires: maven30-mvn(org.apache.maven:maven-artifact:2.0.6)
-BuildRequires: maven30-mvn(org.apache.maven:maven-model:2.0.6)
+BuildRequires: %{?scl_prefix}maven-plugin-plugin
+BuildRequires: %{?scl_prefix}maven-resources-plugin
+BuildRequires: %{?scl_prefix}maven-archiver
+BuildRequires: %{?scl_prefix}mvn(org.apache.maven:maven-artifact:2.0.6)
+BuildRequires: %{?scl_prefix}mvn(org.apache.maven:maven-model:2.0.6)
 # The following maven packages haven't updated yet
-BuildRequires: maven30-maven-changes-plugin
-BuildRequires: maven30-maven-enforcer-plugin
-BuildRequires: maven30-maven-invoker-plugin
+BuildRequires: %{?scl_prefix}maven-changes-plugin
+BuildRequires: %{?scl_prefix}maven-enforcer-plugin
+BuildRequires: %{?scl_prefix}maven-invoker-plugin
 
 # autorequires support for compat packages not finished yet
-Requires: maven30-mvn(org.apache.maven:maven-artifact:2.0.6)
-Requires: maven30-mvn(org.apache.maven:maven-model:2.0.6)
+Requires: %{?scl_prefix}mvn(org.apache.maven:maven-artifact:2.0.6)
+Requires: %{?scl_prefix}mvn(org.apache.maven:maven-model:2.0.6)
 
 %description
 Uploads the project artifacts to the internal remote repository.
@@ -43,7 +43,7 @@ API documentation for %{pkg_name}.
 
 %prep
 %setup -q -n %{pkg_name}-%{version}
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 
 %pom_xpath_inject pom:project "<build><plugins/></build>"
@@ -54,14 +54,14 @@ set -e -x
 %{?scl:EOF}
 
 %build
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 # A test class doesn't compile
 %mvn_build -f
 %{?scl:EOF}
 
 %install
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_install
 %{?scl:EOF}
@@ -75,6 +75,9 @@ set -e -x
 %doc LICENSE
 
 %changelog
+* Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 2.7-11.13
+- maven33 rebuild #2
+
 * Sat Jan 09 2016 Michal Srb <msrb@redhat.com> - 2.7-11.12
 - maven33 rebuild
 
