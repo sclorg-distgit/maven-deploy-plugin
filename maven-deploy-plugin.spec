@@ -4,7 +4,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        2.7
-Release:        11.13%{?dist}
+Release:        11.14%{?dist}
 Summary:        Maven Deploy Plugin
 
 License:        ASL 2.0
@@ -17,7 +17,7 @@ BuildArch: noarch
 BuildRequires: %{?scl_prefix_java_common}javapackages-tools
 
 # Maven and its dependencies
-BuildRequires: %{?scl_prefix_java_common}maven-local
+BuildRequires: %{?scl_prefix}maven-local
 BuildRequires: %{?scl_prefix}maven-plugin-plugin
 BuildRequires: %{?scl_prefix}maven-resources-plugin
 BuildRequires: %{?scl_prefix}maven-archiver
@@ -75,6 +75,9 @@ set -e -x
 %doc LICENSE
 
 %changelog
+* Mon Feb 08 2016 Michal Srb <msrb@redhat.com> - 2.7-11.14
+- Fix BR on maven-local & co.
+
 * Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 2.7-11.13
 - maven33 rebuild #2
 
